@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="pt-br"> 
+      
+    <ui:composition template="/template/admin/adminTemplate.xhtml">
+      <ui:define name="conteudo">
+
+			<h3 class="title_Admin">A listagem a seguir exibe a relação de todos os usuários do sistema.</h3>
+			<h:form>
+					<p:messages id="messages" autoUpdate="true" />
+		             <p:dataTable style="margin-left: -33px;" id="usuarios" var="u" value="#{usuarioMB.usuarios}" widgetVar="usuarioTable"
+						paginator="true" rows="10" emptyMessage="Nenhum usuario cadastrado">
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Busca Geral:" />
+								<h:inputText id="globalFilter" onkeyup="usuarioTable.filter()" />
+							</p:outputPanel>
+						</f:facet>
+						
+						<p:column headerText="Nível">
+							<h:graphicImage library="img/admin" name="u_#{u.admin}.png" style="border:0; width: 25px"/>
+						</p:column>
+						
+						<p:column headerText="Nome" filterBy="#{u.nome}" filterMatchMode="contains">
+							#{u.nome}
+						</p:column>
+						
+						<p:column headerText="Sexo">
+							<h:graphicImage library="img/admin" name="#{u.sexo}.png" style="border:0"/>
+						</p:column>
+						
+						
+ 						<p:column id="filterSexo" headerText="Login" filterBy="#{u.login}" filterMatchMode="contains"> 
+ 							#{u.login}
+ 						</p:column> 
+						
+						<p:column headerText="Senha"> 
+ 							#{u.senha} 
+ 						</p:column> 
+						
+				
+		   			    <p:column headerText="Ações">
+		   			    	<p:commandButton id="selecionar" action="#{usuarioMB.editar}" update=":frmDialog:usuarioDlg" oncomplete="usuarioDialog.show()" icon="ui-icon-search" title="Visualizar"/>
+		   			    	
+		   			    	<p:commandButton id="excluir" action="#{usuarioMB.excluir}" icon="ui-icon-close" update="usuarios"
+		   			    	 onclick="if(!confirm('Confirma a exclusão?')){return false;}"/>  
+		   			    	
+		   			    </p:column>	
+		   			    <f:facet name="footer">
+						    	
+		   			    	<p:commandButton id="menu" action="#{linkMB.linkAdmin}"
+		   			    	icon="ui-icon-close" value="Voltar" title="Tela de administração" ajax="false"/>   		    
+		   			    </f:facet>
+					</p:dataTable>       
+				
+				</h:form>
+				<h:form id="frmDialog">
+					<p:dialog header="Cadastro de Usuario" widgetVar="usuarioDialog" resizable="false" id="usuarioDlg"  
+		                showEffect="fade" hideEffect="explode" modal="true"> 
+		                <h:panelGrid id="display" columns="3" cellpadding="4" style="margin:0 auto;">  
+		  
+		  
+		  
+			            	
+		            		<h:outputText value="Nome:" />  
+		    	        	<p:inputText id="c_nome" value="#{usuarioMB.usuario.nome}" size="30" maxlength="45" required="true" requiredMessage="Nome é obrigatório"/>
+		    	        	<p:message for="c_nome" display="tooltip"/>
+		    	        	
+	        	        	<h:outputText value="Login:" />  
+		    	        	<p:inputText id="c_login" value="#{usuarioMB.usuario.login}" size="30" maxlength="10" required="true" requiredMessage="Login é obrigatório"/>
+		    	        	<p:message for="c_login" display="tooltip"/>
+		    	        	
+		    	        	<h:outputText value="Senha:" />
+		    	        	 <p:password id="c_senha" lable="lblSenha_J" value="#{usuarioMB.usuario.senha}" maxlength="10" required="true" requiredMessage="Informe a senha" validatorMessage="A senha ultrapassou 10 caracteres"  styleClass="mg_canto" feedback="true" 
+							      	promptLabel="Preencha o campo" weakLabel="Fraca"  
+                        				goodLabel="forte" strongLabel="Muito forte"/>
+		   		  		   <p:message for="c_login" display="tooltip"/>
+						   
+						   <h:outputText value="Administrador: " />  
+					        <p:selectOneRadio id="optionsAdmin" value="#{usuarioMB.usuario.admin}">  
+					            <f:selectItem itemLabel="Não" itemValue="N" />  
+					            <f:selectItem itemLabel="Sim" itemValue="S" />    
+					        </p:selectOneRadio>      	        	
+		    	        	
+		          			<p:spacer/>        			
+		        			<p:commandButton action="#{usuarioMB.salvar}" value="Salvar" update="display"/>
+		        			<p:spacer/> 
+		   
+		    	        </h:panelGrid>
+		    	        <p:ajax event="close" listener="#{usuarioMB.fecharModal}" update="display"/>  	
+		            </p:dialog>
+			    </h:form>
+      </ui:define>
+ </ui:composition>
+</html>

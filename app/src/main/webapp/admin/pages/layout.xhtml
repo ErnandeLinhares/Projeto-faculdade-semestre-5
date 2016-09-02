@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      <ui:composition template="/template/admin/adminTemplate.xhtml">
+      <ui:define name="conteudo">
+	
+	<h3 class="title_Admin">A listagem a seguir exibe a relação de todos os anúncios feitos.</h3>
+	<h:form>
+			<p:messages id="messages" autoUpdate="true" />
+             <p:dataTable id="layouts" var="l" value="#{layoutMB.layouts}" widgetVar="layoutTable"
+				paginator="true" rows="10" emptyMessage="Nenhuma layout cadastrado">
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Busca Geral:" />
+						<h:inputText id="globalFilter" onkeyup="layoutTable.filter()" />
+					</p:outputPanel>
+				</f:facet>
+				
+				<p:column headerText="Nome" filterBy="#{l.anuncioBG}" filterMatchMode="contains">
+					#{l.anuncioBG}
+				</p:column>
+				
+				<p:column headerText="Link" filterBy="#{l.anuncioLink}" filterMatchMode="contains">
+					<a href="#{l.anuncioLink}">Link</a>
+				</p:column>
+		
+   			    <p:column headerText="Ações">
+   			    	<p:commandButton id="selecionar" action="#{layoutMB.editar}" update=":frmDialog:layoutDlg" oncomplete="layoutDialog.show()" icon="ui-icon-search" title="Visualizar"/>
+   			    	
+   			    	<p:commandButton id="excluir" action="#{layoutMB.excluir}" icon="ui-icon-close" update="layouts"
+   			    	 onclick="if(!confirm('Confirma a exclusão?')){return false;}"/>  
+   			    	
+   			    </p:column>	
+   			    <f:facet name="footer">
+					<p:commandButton id="novo" 
+					action="#{layoutMB.novo}"
+   			    	oncomplete="layoutDialog.show()" 
+   			    	icon="ui-icon-new" value="Novo" title="Novo"/>   	
+   			    	
+   			    	<p:commandButton id="menu" action="#{linkMB.linkAdmin}"
+   			    	icon="ui-icon-close" value="Voltar" title="Tela de administração" ajax="false"/>   		    
+   			    </f:facet>
+			</p:dataTable>       
+	
+	</h:form>
+	<h:form id="frmDialog">
+			<p:dialog header="Cadastro de Layout" widgetVar="layoutDialog" resizable="false" id="layoutDlg"  
+                showEffect="fade" hideEffect="explode" modal="true"> 
+                <h:panelGrid id="display" columns="3" cellpadding="4" style="margin:0 auto;">  
+  
+  
+  
+	            	
+            		<h:outputText value="Background:" />  
+    	        	<p:inputText id="c_anuncioBG" value="#{layoutMB.layout.anuncioBG}" size="30" maxlength="255" />
+    	        	<p:message for="c_anuncioBG" display="tooltip"/>
+   		  		
+			    	<h:outputText value="Link:" />  
+    	        	<p:inputText id="c_anuncioLink" value="#{layoutMB.layout.anuncioLink}" size="30" maxlength="255" />
+    	        	<p:message for="c_anuncioLink" display="tooltip"/>    	        	
+    	        	
+          			<p:spacer/>        			
+        			<p:commandButton action="#{layoutMB.salvar}" value="Salvar" update="display"/>
+        			<p:spacer/> 
+    	        </h:panelGrid>
+    	        <p:ajax event="close" listener="#{layoutMB.fecharModal}" update="display"/>  	
+            </p:dialog>
+    </h:form>            
+    
+    
+    
+        
+    
+    </ui:define>
+     </ui:composition>
+</html>

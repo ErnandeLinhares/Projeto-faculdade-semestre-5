@@ -1,0 +1,4 @@
+USUARIO ADMINISTRADOR: 
+
+login: admin
+senha: manager

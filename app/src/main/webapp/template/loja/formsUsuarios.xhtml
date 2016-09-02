@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="pt-br"> 
+
+    <body>
+	    <ui:composition>	
+				
+			
+				
+				<div class="container_cadastro_fj">
+					<!-- cadastro de pessoas fisicas-->					
+					 <h:form styleClass="mg_top" id="cad_pessoa">
+				      
+				    						
+						<table >
+							<tr>
+							  <td><h:outputLabel id="lblNome" for="txtNome" value="Nome"/></td>
+						      <td>
+							      <p:inputText id="txtNome" label="lblNome" value="#{usuarioMB.usuario.nome}" maxlength="255" required="true" requiredMessage="Informe o Nome"  validatorMessage="O Nome ultrapassou 255 caracteres" styleClass="mg_canto">
+							      	<f:validateLength maximum="255"/>
+						      	  </p:inputText>						      	     	        				  
+						      </td>
+							</tr>
+							
+							<tr>
+								 <td><h:outputLabel id="lblCPF" for="txtCPF" value="CPF"/></td>
+							     <td>
+								     <p:inputText id="txtCPF" label="lblCPF" value="#{usuarioMB.usuario.cpfCnpj}" maxlength="14" required="true" requiredMessage="Informe o CPF" validatorMessage="O CPF ultrapassou 14 caracteres"  styleClass="mg_canto" >
+								     <f:validateLength maximum="14"/>
+								     </p:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td><h:outputLabel id="lblEmail" for="cf_mail" value="E-mail"/></td>
+								<td>
+								    <p:inputText id="cf_mail" lable="lblEmail" value="#{usuarioMB.usuario.email}" maxlength="45" required="true" requiredMessage="Informe o E-mail" validatorMessage="Email inválido"  styleClass="mg_canto" >
+								    <f:validateLength maximum="45"/>
+								    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> 
+								    </p:inputText>
+								</td>
+							</tr>
+							<tr>
+						   	  <td><h:outputLabel id="lblSexo" for="lblSexo" value="Sexo:"/></td>
+						      <td>
+							      <p:selectOneRadio value="#{usuarioMB.usuario.sexo}" required="true" requiredMessage="Selecione o Sexo">							   	  
+							   	  <f:selectItem itemLabel="Masculino" itemValue="M" />  
+			            		  <f:selectItem itemLabel="Feminino" itemValue="F" />   
+							   	  </p:selectOneRadio>
+							  </td>	  
+							</tr>
+							<tr>                               
+								  <td><h:outputLabel id="lblCEP" for="txtCEP" value="CEP"/></td>
+								  <td>    
+								      <p:inputText id="txtCEP" label="lblCEP" value="#{usuarioMB.usuario.cep}" maxlength="9" required="true" requiredMessage="Informe o CEP" styleClass="mg_canto">			      
+								      <f:validateLength maximum="9"/>
+								      </p:inputText>
+								  </td>   
+							</tr>
+						</table>
+								
+						<div class="title_destaque mg_top">Dados de acesso no site</div>
+						
+						<table > 	
+							<tr>
+								<td><h:outputLabel id="lblLogin" for="cf_login" value="Usuário"/></td>
+							    <td>
+								    <p:inputText id="cf_login" label="lblLogin" value="#{usuarioMB.usuario.login}" maxlength="10" required="true" requiredMessage="Informe o E-mail" validatorMessage="O E-mail ultrapassou 10 caracteres"  styleClass="mg_canto">
+								    <f:validateLength maximum="10"/>
+								    </p:inputText>
+								</td>
+							</tr>
+							<tr>
+							</tr>
+							<tr>
+                                <td><h:outputLabel id="lblSenha" for="txtSenha" value="Senha:"/></td>
+							    <td>
+							      <p:password id="txtSenha" lable="lblSenha" value="#{usuarioMB.usuario.senha}" maxlength="10" required="true" requiredMessage="Informe a senha" validatorMessage="A senha ultrapassou 10 caracteres"  styleClass="mg_canto" feedback="true" 
+							      	promptLabel="Preencha o campo" weakLabel="Fraca"  
+                        				goodLabel="forte" strongLabel="Muito forte"/>
+							    </td>
+							</tr>
+							<tr>
+							</tr>					
+							<tr>
+                                <td colspan="2"><h:commandButton id="btnSalvar"  value="Cadastrar" styleClass="btn_ui mg_top" action="#{usuarioMB.salvar}"/></td>
+							</tr>						
+						</table>													
+					</h:form>	
+					<p:messages />
+					
+					
+					
+					<!-- cadastro de pessoas juridicas-->
+					<h:form class="mg_top" id="cad_juridica" method="post" action="">
+					
+											
+						<table >
+							<tr>
+								  <td><h:outputLabel id="lblRzao" for="txtRzao" value="Razão Social"/></td>
+								  <td>
+								      <p:inputText id="txtRzao" label="lblRzao" value="#{usuarioMB.usuario.razaoSocial}" required="true" requiredMessage="Informe a razão social"  maxlength="255" validatorMessage="A razão social ultrapassou 255 caracteres" styleClass="mg_canto">
+								      <f:validateLength maximum="255"/>
+								      </p:inputText>
+								  </td>    
+							</tr>
+							<tr>
+                                 <td><h:outputLabel id="lblNfantasia" for="txtNfantasia" value="Nome Fantasia"/></td>
+     							  <td>									
+								      <p:inputText id="txtNfantasia" label="lblNfantasia" value="#{usuarioMB.usuario.nome}" required="true" requiredMessage="Informe o nome Fantasia" maxlength="255"  validatorMessage="O nome fantasia ultrapassou 255 caracteres"  styleClass="mg_canto" >
+								      <f:validateLength maximum="255"/>
+								      </p:inputText>
+								  </td>    
+							</tr>
+							<tr>
+								  <td><h:outputLabel id="lblCNPJ" for="lblCNPJ" value="CNPJ:"/></td>
+							      <td>
+								      <p:inputText id="txtCNPJ" label="lblCNPJ" value="#{usuarioMB.usuario.cpfCnpj}" maxlength="45" required="true" requiredMessage="Informe o CNPJ" validatorMessage="O nome fantasia ultrapassou 45 caracteres"  styleClass="mg_canto" >
+								      <f:validateLength maximum="45"/>
+								      </p:inputText>
+								   </td>   
+							</tr>							
+							<tr>
+								  <td><h:outputLabel id="lblCEP_J" for="lblCEP_J" value="CEP:"/></td>
+								  <td>    
+								      <p:inputText id="txtCEP_J" label="lblCEP_J" value="#{usuarioMB.usuario.cep}" maxlength="9"  required="true" requiredMessage="Informe o CEP"  validatorMessage="O CEP ultrapassou 45 caracteres"  styleClass="mg_canto" >
+								      <f:validateLength maximum="9"/>
+								      </p:inputText>
+								  </td> 								
+							</tr>
+							<tr>
+								 <td><h:outputLabel id="lblEmail_J" for="txtEmail_J" value="E-mail"/></td>
+							      <td>
+								      <p:inputText id="txtEmail_J" lable="lblEmail_J" value="#{usuarioMB.usuario.email}" required="true" requiredMessage="Informe o E-mail" maxlength="255" validatorMessage="O e-mail ultrapassou 255 caracteres"  styleClass="mg_canto">
+								      <f:validateLength maximum="45"/>
+								      <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								      </p:inputText>
+								  </td>  
+							</tr>
+						</table>
+								
+						<div class="title_destaque mg_top">Dados de acesso no site</div>
+						
+						<table > 	
+							<tr>
+								  <td><h:outputLabel id="lblLogin_J" for="txtLogin_J" value="Usuário"/></td>
+							      <td>
+								      <p:inputText id="txtLogin_J" lable="lblLogin_J" value="#{usuarioMB.usuario.login}" required="true" requiredMessage="Informe o E-mail" maxlength="10" validatorMessage="O usuário ultrapassou 10 caracteres"  styleClass="mg_canto">
+								      <f:validateLength maximum="10"/>
+								      </p:inputText>
+								  </td>    
+							</tr>
+							<tr>
+							</tr>
+							<tr>
+								  <td><h:outputLabel id="lblSenha_J" for="lblSenha_J" value="Senha:"/></td>
+							      <td>
+								      <p:password id="txtSenha_J" lable="lblSenha_J" value="#{usuarioMB.usuario.senha}" maxlength="10" required="true" requiredMessage="Informe a senha" validatorMessage="A senha ultrapassou 10 caracteres"  styleClass="mg_canto" feedback="true" 
+							      	promptLabel="Preencha o campo" weakLabel="Fraca"  
+                        				goodLabel="forte" strongLabel="Muito forte"/>
+								  </td>    
+							</tr>
+							<tr>
+							</tr>					
+							<tr>                                
+                                <td colspan="2"><h:commandButton id="btnSalvar_j"  value="Cadastrar" styleClass="btn_ui mg_top" action="#{usuarioMB.salvar}"/></td>
+                             </tr>						
+						</table>
+					</h:form>						
+				</div>		
+	
+				
+					
+	    </ui:composition>
+    </body>
+</html>

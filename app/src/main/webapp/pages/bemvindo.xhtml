@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Escola</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Sistema Escola [#{sessionScope.usuario.nome}]" style="width:35%">
+		<p:dock position="top" halign="center" >
+			<p:menuitem value="Home" icon="/images/menu/home.png" url="bemvindo.jsf" />
+			<p:menuitem value="Aluno" icon="/images/menu/aluno.png" url="aluno.jsf" />
+			<p:menuitem value="Professor" icon="/images/menu/professor.png" url="#" />
+			<p:menuitem value="Curso" icon="/images/menu/curso.png" url="#" />
+			<p:menuitem value="Turma" icon="/images/menu/turma.png"	url="#" />
+			<p:menuitem value="Sair" icon="/images/menu/sair.png"	url="login.jsf" action="#{loginMB.logout}"  />
+		</p:dock>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

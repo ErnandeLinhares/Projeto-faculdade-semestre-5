@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:composition template="/template/admin/adminTemplate.xhtml">
+      <ui:define name="conteudo">
+		<h:form>
+			<h:messages/>
+			
+    	 	<h:dataTable  value="#{categoriaMB.listarCategorias}" var="categoria" rules="rows" cellpadding="5">
+		     	<f:facet name="caption">
+		     	A listagem a seguir exibe a relação de todos as categorias do sistema.
+		     	</f:facet>
+		     	<f:facet name="header">Listagem de Categorias</f:facet>
+		     	<f:facet name="footer">Final da Listagem de Categorias</f:facet>		    	
+		     	<h:column>
+			     	<f:facet name="header">
+			     		Nome 
+			     	  <h:commandLink action="#{categoriaMB.novo}" immediate="true" title="Cadastrar nova categoria">
+				      		<h:graphicImage library="img/admin" name="novo.png" style="position: relative;left: 109px;;height: 26px;margin: -4px 0 -7px -3px;"></h:graphicImage>
+				      </h:commandLink>
+	     			</f:facet>
+			     	
+			     	#{categoria.catNome}			     	
+		     	</h:column>
+		     	
+		     
+		     	<h:column>
+		     	<h:commandLink action="#{categoriaMB.editar}" title="Editar a categoria #{categoria.catNome}">
+		     		<h:graphicImage library="img/admin" name="editar.png" style="border:0"/>
+			 	<f:setPropertyActionListener target="#{categoriaMB.categoria}" value="#{categoria}"/>
+			 	</h:commandLink>
+			 	</h:column>
+			 	<h:column>
+			 	<h:commandLink action="#{categoriaMB.excluir}" title="Excluir a categoria #{categoria.catNome}" onclick="if(!confirm('Confirma a exclusão da categoria: #{categoria.catNome}?')) return false;">
+			 		<h:graphicImage library="img/admin" name="excluir.png" style="border:0"/>
+		    	<f:setPropertyActionListener target="#{categoriaMB.categoria}" value="#{categoria}"/>
+		    	</h:commandLink>
+		    	</h:column>
+	    	</h:dataTable>
+	  		
+		</h:form>
+	</ui:define>
+  </ui:composition>
+</html>

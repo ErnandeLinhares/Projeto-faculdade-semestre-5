@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Escola</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Sistema Escola [#{sessionScope.usuario.nome}]" style="width:50%">
+			<p:messages id="messages" autoUpdate="true" />
+             <p:dataTable id="alunos" var="a" value="#{alunoMB.alunos}" widgetVar="alunoTable"
+				paginator="true" rows="10" emptyMessage="Nenhum aluno cadastrado">
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Busca Geral:" />
+						<h:inputText id="globalFilter" onkeyup="alunoTable.filter()" />
+					</p:outputPanel>
+				</f:facet>
+				
+				<p:column headerText="RA" filterBy="#{a.ra}" filterMatchMode="contains">
+					#{a.ra}
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{a.nome}" filterMatchMode="contains">
+					#{a.nome}
+				</p:column>
+				<p:column headerText="CPF" filterBy="#{a.cpf}" filterMatchMode="contains">
+					#{a.cpf}
+				</p:column>
+   			    <p:column headerText="Ações">
+   			    	<p:commandButton id="selecionar" action="#{alunoMB.editar}" update=":frmDialog:alunoDlg" oncomplete="alunoDialog.show()" icon="ui-icon-search" title="Visualizar"/>
+   			    	
+   			    	<p:commandButton id="excluir" action="#{alunoMB.excluir}" icon="ui-icon-close" update="alunos"
+   			    	 onclick="if(!confirm('Confirma a exclusão?')){return false;}"/>  
+   			    	
+   			    </p:column>	
+   			    <f:facet name="footer">
+					<p:commandButton id="novo" 
+					action="#{alunoMB.novo}"
+   			    	oncomplete="alunoDialog.show()" 
+   			    	icon="ui-icon-new" value="Novo" title="Novo"/>   	
+   			    	
+   			    	<p:commandButton id="menu" action="#{loginMB.menu}"
+   			    	icon="ui-icon-close" value="Voltar" title="Volta para o menu principal" ajax="false"/>   		    
+   			    </f:facet>
+			</p:dataTable>       
+		</p:panel>
+	</h:form>
+	<h:form id="frmDialog">
+			<p:dialog header="Cadastro de Aluno" widgetVar="alunoDialog" resizable="false" id="alunoDlg"  
+                showEffect="fade" hideEffect="explode" modal="true"> 
+                <h:panelGrid id="display" columns="3" cellpadding="4" style="margin:0 auto;">  
+  
+	            	<h:outputText value="RA:*" />  
+	            	<p:inputMask id="ra" value="#{alunoMB.aluno.ra}" mask="9999999999" size="10" maxlength="10" required="true" requiredMessage="RA é obrigatório"/>
+	            	<p:message for="ra" display="tooltip"/>
+	            	
+            		<h:outputText value="Nome:*" />  
+    	        	<p:inputText id="nome" value="#{alunoMB.aluno.nome}" size="30" maxlength="45" required="true" requiredMessage="Nome é obrigatório"/>
+    	        	<p:message for="nome" display="tooltip"/>
+    	        	
+    	        	<h:outputText value="Data de Nascimento:*" />  
+	            	<p:inputMask id="dataNascimento" value="#{alunoMB.aluno.dataNascimento}" mask="99/99/9999" size="10" maxlength="10" required="true" requiredMessage="Data de Nascimento é obrigatória">
+	            		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	            	</p:inputMask>
+	            	<p:message for="dataNascimento" display="tooltip"/>
+    	        	
+    	        	<h:outputText value="RG:*" />  
+    	        	<p:inputMask id="rg" value="#{alunoMB.aluno.rg}" mask="99.999.999-9" size="12" maxlength="12" required="true" requiredMessage="RG é obrigatório"/>
+    	        	<p:message for="rg" display="tooltip"/>
+    	        	
+    	        	<h:outputText value="CPF:*" />  
+    	        	<p:inputMask id="cpf" value="#{alunoMB.aluno.cpf}" mask="999.999.999-99" size="14" maxlength="14" required="true" requiredMessage="CPF é obrigatório"/>
+    	        	<p:message for="cpf" display="tooltip"/>
+    	        	
+    	        	<h:outputText value="Sexo:" />  
+    	        	<p:selectOneMenu value="#{alunoMB.aluno.sexo}">  
+            			 <f:selectItem itemLabel="Masculino" itemValue="M" />  
+            			 <f:selectItem itemLabel="Feminino" itemValue="F" />  
+        			</p:selectOneMenu> 
+        			<p:spacer/>
+        			<p:spacer/>
+        			<p:commandButton action="#{alunoMB.salvar}" value="Salvar" update="display"/>
+        			<p:spacer/> 
+    	        </h:panelGrid>
+    	        <p:ajax event="close" listener="#{alunoMB.fecharModal}" update="display"/>  	
+            </p:dialog>
+    </h:form>            
+</h:body>
+</html>
